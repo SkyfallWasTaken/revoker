@@ -19,7 +19,7 @@ class AffectedPartyNotifier
 
     payload = ApplicationController.renderer.render(
       template: slack_template,
-      formats: [ :slack_message ],
+      formats: [ :slack_blocks ],
       assigns: { revocation: @revocation, revocation_url: revocation_url }
     )
 
