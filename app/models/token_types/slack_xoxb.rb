@@ -14,7 +14,8 @@ module TokenTypes
       test_response = client.auth_test
       Rails.logger.info("SlackXoxb: auth.test response: ok=#{test_response.ok}, bot_id=#{test_response.bot_id}")
 
-      owner_email = test_response.user # fallback to bot username
+      owner_email = nil
+      owner_bot_name = test_response.user
       owner_slack_id = nil
 
       # Step 2: Use bots.info to get app_id, then team.integrationLogs to find installer
@@ -82,7 +83,7 @@ module TokenTypes
       end
 
       Rails.logger.info("SlackXoxb: Token successfully revoked")
-      { success: true, owner_email:, owner_slack_id: }
+      { success: true, owner_email:, owner_slack_id:, owner_bot_name: }
     rescue StandardError => e
       Rails.logger.error("SlackXoxb: Exception during revocation - #{e.class}: #{e.message}")
       Rails.logger.error(e.backtrace.join("\n"))
