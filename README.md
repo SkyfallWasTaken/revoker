@@ -92,6 +92,11 @@ module TokenTypes
       # return { success: true, owner_email: "user@example.com" }
       # or { success: true, owner_email: "...", status: "action_needed" }
       # or { success: false } if it's not your token
+      #
+      # optional: include key_name to identify which specific key/token was revoked
+      # return { success: true, owner_email: "...", key_name: "prod-api-key" }
+      # for bots, use the bot name. this shows up in notifications to help users
+      # identify which token was compromised
     end
 
     # optional: custom redaction logic
@@ -119,4 +124,7 @@ the `revoke` method should:
 - call your service's API to invalidate the token
 - return the owner's email if possible (for notifications)
 - return `status: "action_needed"` if manual intervention is required
-- handle errors gracefully and return `{ success: false }` on NX token
+- optionally return `key_name` to identify the specific key (e.g., msw@hackatime)
+- handle errors gracefully and return `{ success: false }` on failure
+
+the `key_name` field is optional but really nice to have. 

@@ -13,6 +13,11 @@ module TokenTypes
     #   { success: true, owner_email: "...", status: "complete" } on immediate success
     #   { success: true, owner_email: "...", status: "action_needed" } when manual intervention required
     #   { success: false } on failure
+    #
+    # Optional return fields:
+    #   - key_name: identifier for the specific key (e.g., bot name, key label like "msw@hackatime")
+    #   - owner_slack_id: Slack user ID of the token owner
+    #
     # Optional parameters for tokens that require companion tokens (e.g., Slack xoxc/xoxd pairs)
     # Status defaults to "complete" if not specified
     def self.revoke(token, **kwargs)
