@@ -2,7 +2,7 @@ module TokenTypes
   # Registry of all token types
   ALL = [
     AirtablePAT,
-    # HackatimeAdminKey, # waiting on PR hackatime/#747
+    HackatimeAdminKey,
     HCBOAuth,
     SlackXoxb,
     SlackXoxp,
