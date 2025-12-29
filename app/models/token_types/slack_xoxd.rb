@@ -81,7 +81,7 @@ module TokenTypes
 
       first = token[0..6]  # "xoxd-"
       last = token[-4..]
-      asterisks = "*" * [token.length - 11, 10].max
+      asterisks = "*" * [ token.length - 11, 10 ].max
 
       "#{first}#{asterisks}#{last}"
     end

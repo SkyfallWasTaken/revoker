@@ -1,12 +1,12 @@
 class RevocationsController < ApplicationController
-  before_action :set_revocation, only: [:edit, :update]
+  before_action :set_revocation, only: [ :edit, :update ]
 
   def new
     @token_types = TokenTypes::ALL.map do |token_type|
       # Convert Ruby regex anchors to JavaScript compatible ones
       regex_source = token_type.regex.source
-        .gsub('\\A', '^')
-        .gsub('\\z', '$')
+        .gsub('\\A', "^")
+        .gsub('\\z', "$")
 
       {
         name: token_type.display_name,
@@ -111,8 +111,8 @@ class RevocationsController < ApplicationController
   def build_token_types_for_view
     TokenTypes::ALL.map do |token_type|
       regex_source = token_type.regex.source
-        .gsub('\\A', '^')
-        .gsub('\\z', '$')
+        .gsub('\\A', "^")
+        .gsub('\\z', "$")
 
       {
         name: token_type.display_name,

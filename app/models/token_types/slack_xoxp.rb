@@ -6,14 +6,14 @@ module TokenTypes
 
     def self.revoke(token, **kwargs)
       Rails.logger.info("SlackXoxp: Starting revocation for token")
-      
+
       client = Slack::Web::Client.new(token:)
-      
+
       # Step 1: Verify the token and get user info using auth.test
       Rails.logger.info("SlackXoxp: Calling auth.test")
       test_response = client.auth_test
       Rails.logger.info("SlackXoxp: auth.test response: ok=#{test_response.ok}, user=#{test_response.user}, user_id=#{test_response.user_id}")
-      
+
       user_id = test_response.user_id
       username = test_response.user
       Rails.logger.info("SlackXoxp: Got user_id: #{user_id}, username: #{username}")
@@ -27,7 +27,7 @@ module TokenTypes
         bot_client = Slack::Web::Client.new(token: bot_token)
         user_response = bot_client.users_info(user: user_id)
         Rails.logger.info("SlackXoxp: users.info response: ok=#{user_response.ok}")
-        
+
         if user_response.ok && user_response.user.profile.email
           owner_email = user_response.user.profile.email
           Rails.logger.info("SlackXoxp: Got owner_email: #{owner_email}")
@@ -42,7 +42,7 @@ module TokenTypes
       Rails.logger.info("SlackXoxp: Calling auth.revoke")
       revoke_response = client.auth_revoke
       Rails.logger.info("SlackXoxp: auth.revoke response: ok=#{revoke_response.ok}")
-      
+
       unless revoke_response.ok
         Rails.logger.warn("SlackXoxp: auth.revoke failed")
         return { success: false }

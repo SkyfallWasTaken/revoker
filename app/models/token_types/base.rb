@@ -26,7 +26,7 @@ module TokenTypes
 
       first = token[0..6]
       last = token[-3..]
-      asterisks = "*" * [token.length - 10, 3].max
+      asterisks = "*" * [ token.length - 10, 3 ].max
 
       "#{first}#{asterisks}#{last}"
     end

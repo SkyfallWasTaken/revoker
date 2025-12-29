@@ -21,11 +21,11 @@ class AffectedPartyNotifier
 
     payload = ApplicationController.renderer.render(
       template: slack_template,
-      formats: [:slack_message],
+      formats: [ :slack_message ],
       assigns: { revocation: @revocation, revocation_url: revocation_url }
     )
 
-    users = [@revocation.owner_slack_id, ENV["NORA_SLACK_ID"]].compact.uniq
+    users = [ @revocation.owner_slack_id, ENV["NORA_SLACK_ID"] ].compact.uniq
     conversation = client.conversations_open(users: users.join(","))
 
     client.chat_postMessage(
@@ -110,5 +110,4 @@ class AffectedPartyNotifier
   rescue
     nil
   end
-
 end

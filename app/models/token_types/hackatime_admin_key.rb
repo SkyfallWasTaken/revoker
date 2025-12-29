@@ -7,33 +7,33 @@ module TokenTypes
     def self.revoke(token, **kwargs)
       logger_prefix = "HackatimeAdminKey"
       Rails.logger.info("#{logger_prefix}: Starting revocation for token")
-      
+
       hackatime_url = ENV["HACKATIME_API_URL"] || "http://localhost:3000"
       auth_token = ENV["HACKATIME_AUTH_TOKEN"]
-      
+
       unless auth_token
         Rails.logger.error("#{logger_prefix}: HACKATIME_AUTH_TOKEN not configured")
         Sentry.capture_message("HACKATIME_AUTH_TOKEN not configured", level: :error)
         return { success: false }
       end
-      
+
       begin
         connection = Faraday.new(url: hackatime_url) do |faraday|
           faraday.request :json
           faraday.response :json
         end
-        
+
         Rails.logger.info("#{logger_prefix}: Making POST request to #{hackatime_url}/api/internal/revoke")
-        
+
         response = connection.post("/api/internal/revoke", {}, {
           "Authorization" => "Bearer #{auth_token}"
         }) do |req|
           req.params["token"] = token
         end
-        
+
         body = response.body
         Rails.logger.info("#{logger_prefix}: Response status=#{response.status}, body=#{body.inspect}")
-        
+
         if response.success? && body["success"]
           owner_email = body["owner_email"] || "unknown@example.com"
           Rails.logger.info("#{logger_prefix}: Token successfully revoked, owner_email=#{owner_email}")

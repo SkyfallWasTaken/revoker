@@ -48,7 +48,7 @@ end
 gem "jb"
 gem "pry-rails", group: :development
 gem "awesome_print"
-gem "dotenv-rails", groups: [:development, :test]
+gem "dotenv-rails", groups: [ :development, :test ]
 gem "vite_rails"
 gem "phlex-rails"
 gem "pundit"

@@ -19,8 +19,7 @@ module TokenTypes
       prefix = parts[0..2].join("_")
       data = parts[3]
 
-      "#{prefix}_#{data[0..2]}#{"*" * [data.length - 5, 3].max}#{data[-2..]}"
+      "#{prefix}_#{data[0..2]}#{"*" * [ data.length - 5, 3 ].max}#{data[-2..]}"
     end
   end
-
 end

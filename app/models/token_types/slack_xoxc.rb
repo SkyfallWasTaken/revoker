@@ -173,7 +173,7 @@ module TokenTypes
         end
 
         if revocation_succeeded
-          return { success: true, owner_email:, owner_slack_id: }
+          { success: true, owner_email:, owner_slack_id: }
         else
           Rails.logger.error("SlackXoxc: Both auth.enterpriseSignout and auth.revoke failed")
 
@@ -188,16 +188,16 @@ module TokenTypes
             }
           end
 
-          return { success: false }
+          { success: false }
         end
 
       rescue Faraday::Error => e
         Rails.logger.error("SlackXoxc: Faraday error - #{e.message}")
-        return { success: false }
+        { success: false }
       rescue StandardError => e
         Rails.logger.error("SlackXoxc: Exception during revocation - #{e.class}: #{e.message}")
         Rails.logger.error(e.backtrace.join("\n"))
-        return { success: false }
+        { success: false }
       end
     end
 
