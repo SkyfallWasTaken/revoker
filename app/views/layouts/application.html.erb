@@ -32,7 +32,7 @@
       bother it for any issues
       <span class="footer-sep">•</span>
       <% if Rails.application.config.commit_link %>
-        <a href="<%= Rails.application.config.commit_link %>" class="footer-version">v<%= Rails.application.config.git_version %></a>
+        <a href="<%= Rails.application.config.commit_link %>" class="footer-version" target="_blank">v<%= Rails.application.config.git_version %></a>
       <% else %>
         <span class="footer-version">v<%= Rails.application.config.git_version %></span>
       <% end %>
