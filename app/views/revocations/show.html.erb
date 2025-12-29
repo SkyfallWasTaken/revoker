@@ -1,0 +1,51 @@
+<div class="show-page">
+  <div class="letter">
+    <p>Hi,</p>
+
+    <% if @revocation.status == "action_needed" %>
+      <p>
+        Your <strong><%= @revocation.token_type.constantize.display_name %></strong> was found exposed<% if @revocation.submitter.present? %> by <strong><%= @revocation.submitter %></strong><% end %>.
+      </p>
+
+      <div class="token-block">
+        <code><%= @revocation.token %></code>
+      </div>
+
+      <p>
+        <strong>You need to revoke this token immediately to protect your account.</strong> We weren't able to revoke it automatically, so you'll need to do it manually.
+      </p>
+    <% else %>
+      <p>
+        Your <strong><%= @revocation.token_type.constantize.display_name %></strong> was found exposed<% if @revocation.submitter.present? %> by <strong><%= @revocation.submitter %></strong><% end %> and has been revoked to protect your account.
+      </p>
+
+      <div class="token-block">
+        <code><%= @revocation.token %></code>
+      </div>
+
+      <p>
+        This means the token no longer works. If you were using it for something,
+        you'll need to generate a new one.
+      </p>
+    <% end %>
+
+    <% if @revocation.comment.present? %>
+      <p><%= @revocation.submitter.present? ? content_tag("b", @revocation.submitter) : "The submitter" %> left this note:</p>
+      <p class="context"><%= @revocation.comment %></p>
+    <% end %>
+  </div>
+
+  <details class="meta">
+    <summary>Details</summary>
+    <table>
+      <tr>
+        <th>Notified</th>
+        <td><%= @revocation.owner_email %></td>
+      </tr>
+      <tr>
+        <th><%= @revocation.status == "action_needed" ? "Submitted" : "Revoked" %> at</th>
+        <td><%= @revocation.created_at.strftime("%b %-d, %Y at %H:%M UTC") %></td>
+      </tr>
+    </table>
+  </details>
+</div>

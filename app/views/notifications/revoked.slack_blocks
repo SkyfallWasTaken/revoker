@@ -1,0 +1,14 @@
+token_display_name = begin
+  @revocation.token_type.constantize.display_name
+rescue
+  @revocation.token_type
+end
+
+submitter_text = @revocation.submitter.present? ? " by *#{@revocation.submitter}*" : ""
+section "Your *#{token_display_name}* was found exposed#{submitter_text} and has been revoked to protect your account.", markdown: true
+
+section "`#{@revocation.token}`", markdown: true
+
+section "This means the token no longer works. If you were using it for something, you'll need to generate a new one.", markdown: true
+
+actions [button("View details", "view_details", url: @revocation_url)]

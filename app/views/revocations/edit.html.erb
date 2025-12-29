@@ -1,0 +1,36 @@
+<div class="page-container">
+  <header class="page-header">
+    <h1>Thanks!</h1>
+    <% if @revocation.status == "action_needed" %>
+      <p>We've received your token submission. <br/><strong>We couldn't revoke it immediately, but we're working on
+        it.</strong></p>
+      <p>The owner at <strong><%= @revocation.owner_email %></strong> has been notified.
+        <br/>We'll follow up once this is
+        remediated.</p>
+
+    <% else %>
+      <p>The token has been revoked and the owner notified at <strong><%= @revocation.owner_email %></strong>.</p>
+
+    <% end %>
+    <p>You just made Hack Club a little bit safer. If you'd like credit or want to leave additional info, add some
+      details below.</p>
+  </header>
+
+  <%= form_with url: revocation_path(@revocation), method: :patch, class: "revocation-form" do |f| %>
+    <div class="form-group">
+      <label for="submitter">Your info <span class="optional-label">(optional)</span></label>
+      <input type="text" name="submitter" id="submitter" placeholder="@handle, email, or name"/>
+    </div>
+
+    <div class="form-group">
+      <label for="comment">Notes <span class="optional-label">(optional)</span></label>
+      <textarea name="comment" id="comment" rows="3" placeholder="Where did you find it?"></textarea>
+    </div>
+
+    <button type="submit">Done</button>
+  <% end %>
+
+  <p class="bounty-cta">Consider submitting a <%= link_to "security bounty report", "https://security.hackclub.com", target: "_blank" %> if
+    you haven't already.</p>
+
+</div>

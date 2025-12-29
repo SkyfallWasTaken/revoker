@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Revoker" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Revoker">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= vite_stylesheet_tag "application.scss" %>
+    <%= vite_client_tag %>
+    <%= vite_javascript_tag 'application' %>
+  </head>
+
+  <body>
+    <%= yield %>
+    <footer class="layout-footer">
+      for <a href="https://hackclub.com" target="_blank">hack club</a>
+      by <a href="https://hackclub.slack.com/app_redirect?channel=U09ULFV88KU" target="_blank">nora</a>,
+      bother it for any issues
+      <span class="footer-sep">•</span>
+      <% if Rails.application.config.commit_link %>
+        <a href="<%= Rails.application.config.commit_link %>" class="footer-version">v<%= Rails.application.config.git_version %></a>
+      <% else %>
+        <span class="footer-version">v<%= Rails.application.config.git_version %></span>
+      <% end %>
+    </footer>
+  </body>
+</html>
