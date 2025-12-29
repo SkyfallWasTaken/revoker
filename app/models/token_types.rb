@@ -3,6 +3,7 @@ module TokenTypes
   ALL = [
     AirtablePAT,
     # HackatimeAdminKey, # waiting on PR hackatime/#747
+    HCBOAuth,
     SlackXoxb,
     SlackXoxp,
     SlackXoxc,
@@ -24,6 +25,7 @@ end
 require_relative "token_types/base"
 require_relative "token_types/airtable_pat"
 require_relative "token_types/hackatime_admin_key"
+require_relative "token_types/hcb_oauth"
 require_relative "token_types/slack_xoxb"
 require_relative "token_types/slack_xoxp"
 require_relative "token_types/slack_xoxc"
