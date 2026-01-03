@@ -1,6 +1,6 @@
 module TokenTypes
   class HackClubSearchAPIKey < Base
-    self.regex = /\Ask-hcs-v1-[0-9a-f]{32}\z/
+    self.regex = /\Ask-hcs-v1-[0-9a-f]{64}\z/
     self.name = "Hack Club Search API key"
     self.hint = "sk-hcs-v1-..."
     self.service_owner_emails = %w[mahad@hackclub.com]
