@@ -22,6 +22,12 @@ yarn install
 bin/dev
 ```
 
+create `.env.development`:
+```env
+AIRTABLE_BASE_KEY=appXXX
+AIRTABLE_PAT=patXXX
+```
+
 ## adding a new token type
 
 run a Hack Club service with API keys? please add support! when tokens leak (and they will), fast revocation protects your users. it only takes a few lines of code and a PR.
