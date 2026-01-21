@@ -67,3 +67,51 @@ ALL = [
   # ...
 ].freeze
 ```
+
+## API for secret scanners
+
+building a secret scanner? use the API to automatically revoke detected tokens.
+
+### POST /api/v1/revocations
+
+```bash
+curl -X POST https://revoke.hackclub.com/api/v1/revocations \
+  -H "Content-Type: application/json" \
+  -d '{
+    "token": "pat_xxxxxxxxxxxxx",
+    "submitter": "my-scanner",
+    "comment": "found in public github repo"
+  }'
+```
+
+**request body:**
+
+| field | required | description |
+|-------|----------|-------------|
+| `token` | yes | the leaked token to revoke |
+| `submitter` | no | identifier for your scanner (shown in logs) |
+| `comment` | no | context about where/how the token was found |
+
+**success response (201):**
+
+```json
+{
+  "success": true,
+  "status": "complete",
+  "token_type": "Airtable PAT",
+  "owner_email": "user@example.com",
+  "key_name": "production-api-key"
+}
+```
+
+**error responses (422):**
+
+```json
+{ "success": false, "error": "Token is required" }
+{ "success": false, "error": "Token doesn't match any supported type" }
+{ "success": false, "error": "Token is invalid or already revoked" }
+```
+
+**status values:**
+- `complete` - token was successfully revoked
+- `action_needed` - manual intervention required (response includes `action_needed` message)

@@ -4,4 +4,12 @@ Rails.application.routes.draw do
   post "token_types/detect" => "token_types#detect"
   get "privacy" => "static_pages#privacy"
   get "up" => "rails/health#show", as: :rails_health_check
+
+  namespace :api do
+    namespace :v1 do
+      defaults format: :json do
+        resources :revocations, only: [ :create ]
+      end
+    end
+  end
 end

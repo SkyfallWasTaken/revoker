@@ -12,4 +12,11 @@ section "`#{@revocation.token}`", markdown: true
 
 section "This means the token no longer works. If you were using it for something, you'll need to generate a new one.", markdown: true
 
+if @revocation.submitter.present? || @revocation.comment.present?
+  context_parts = []
+  context_parts << "Found by: #{@revocation.submitter}" if @revocation.submitter.present?
+  context_parts << "Comment: #{@revocation.comment}" if @revocation.comment.present?
+  section context_parts.join("\n"), markdown: true
+end
+
 actions [button("View details", "view_details", url: @revocation_url)]
